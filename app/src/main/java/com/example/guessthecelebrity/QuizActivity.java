@@ -87,7 +87,8 @@ public class QuizActivity extends AppCompatActivity {
         };
 
         // Start quiz timer
-        final CountDownTimer quizTimer = new CountDownTimer(defaultGameDuration, 1000) {
+        final CountDownTimer quizTimer = new CountDownTimer(defaultGameDuration + 500,
+                1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timerTextView.setText(quizInfo.getQuizInfoHelper()
