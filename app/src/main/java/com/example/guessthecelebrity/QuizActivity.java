@@ -27,11 +27,12 @@ public class QuizActivity extends AppCompatActivity {
     private LinearLayout optionLinearLayout;
 
     // Variables
-    private long defaultGameDuration;
+    private long defaultQuizDuration;
     private QuizInfo quizInfo;
     private List<CelebInfo> celebsInfo;
     private Intent intent;
     private Boolean canClick;
+    private Long quizTimerDuration;
 
     private void initialise() {
         timerTextView = findViewById(R.id.timerTextView);
@@ -40,11 +41,12 @@ public class QuizActivity extends AppCompatActivity {
         guessVerdictTextView = findViewById(R.id.guessVerdictTextView);
         optionLinearLayout = findViewById(R.id.optionLinearLayout);
 
-        defaultGameDuration = 30*1000;
+        defaultQuizDuration = 30*1000;
         quizInfo = new QuizInfo();
         celebsInfo = (ArrayList<CelebInfo>) getIntent().getExtras().getSerializable("celebsInfo");
         intent = new Intent(QuizActivity.this, PostQuizActivity.class);
         canClick = true;
+        quizTimerDuration = defaultQuizDuration;
     }
 
     private void setGameText() {
@@ -89,7 +91,7 @@ public class QuizActivity extends AppCompatActivity {
         };
 
         // Start quiz timer
-        final CountDownTimer quizTimer = new CountDownTimer(defaultGameDuration + 500,
+        final CountDownTimer quizTimer = new CountDownTimer(defaultQuizDuration + 500,
                 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -98,6 +100,7 @@ public class QuizActivity extends AppCompatActivity {
             }
             @Override
             public void onFinish() {
+                quizTimerDuration = 0L;
                 guessVerdictTextView.setText("Game Over");
                 celebImageView.setImageResource(R.drawable.time_over);
                 optionLinearLayout.setVisibility(View.GONE);
@@ -115,7 +118,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     public void clickOption(View view) {
-        if (canClick) {
+        if (canClick && quizTimerDuration != 0L) {
             // Setting Verdict on TextView
             canClick = false;
             String guessVerdictTextViewText = guessVerdictTextView.getText().toString();
