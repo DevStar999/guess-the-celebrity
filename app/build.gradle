@@ -39,4 +39,8 @@ dependencies {
 
     /* Jsoup Dependency */
     implementation 'org.jsoup:jsoup:1.13.1'
+
+    /* Lombok Dependency */
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
 }
