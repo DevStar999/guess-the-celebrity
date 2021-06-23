@@ -85,19 +85,23 @@
         <Button
             android:id="@+id/optionButton0"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:onClick="clickOption"/>
         <Button
             android:id="@+id/optionButton1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:onClick="clickOption"/>
         <Button
             android:id="@+id/optionButton2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:onClick="clickOption"/>
         <Button
             android:id="@+id/optionButton3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:onClick="clickOption"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
