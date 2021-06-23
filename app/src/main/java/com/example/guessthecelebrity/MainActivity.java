@@ -1,17 +1,22 @@
 package com.example.guessthecelebrity;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private TextView infoContentTextView;
+    private Button startButton;
 
     private void initialise() {
         infoContentTextView = findViewById(R.id.infoContentTextView);
+        startButton = findViewById(R.id.startButton);
 
         String textOfContentTextView =  "Guess as many celebrities as you\n" +
                 "can by choosing the answer for\n"+
@@ -22,7 +27,11 @@ public class MainActivity extends AppCompatActivity {
         infoContentTextView.setText(textOfContentTextView);
     }
 
+    // 'O' stands for Oreo i.e. SDK version 26,
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void startQuiz(View view) {
+        startButton.setTooltipText(""); // This method call requires API level 26
+
         Intent intent = new Intent(MainActivity.this, QuizActivity.class);
         startActivity(intent);
     }
