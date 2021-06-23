@@ -118,7 +118,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     public void clickOption(View view) {
-        if (canClick && quizTimerDuration != 0L) {
+        if (canClick && quizTimerDuration > 0L) {
             // Setting Verdict on TextView
             canClick = false;
             String guessVerdictTextViewText = guessVerdictTextView.getText().toString();
@@ -138,10 +138,12 @@ public class QuizActivity extends AppCompatActivity {
                 public void onTick(long millisUntilFinished) { }
                 @Override
                 public void onFinish() {
-                    guessVerdictTextView.setText("Guess Verdict : ");
-                    guessVerdictTextView.setTextColor(Color.BLACK);
-                    setGameText();
-                    canClick = true;
+                    if (quizTimerDuration > 0L) {
+                        guessVerdictTextView.setText("Guess Verdict : ");
+                        guessVerdictTextView.setTextColor(Color.BLACK);
+                        setGameText();
+                        canClick = true;
+                    }
                 }
             }.start();
         }
