@@ -6,30 +6,22 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
     @Override
-    protected Bitmap doInBackground(String... urls) {
-        Log.i("Info ImageDownloader", "Url = " + urls[0]);
+    protected Bitmap doInBackground(String... imageUrls) {
+        Log.i("Info", "Url = " + imageUrls[0]);
 
-        URL url;
-        HttpURLConnection urlConnection;
         Bitmap myBitmap;
-
         try {
-            Log.i("Info ImageDownloader", "Inside try block of doInBackground(), checkpoint 1");
-            url = new URL(urls[0]);
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.connect();
-            InputStream in = urlConnection.getInputStream();
-            myBitmap = BitmapFactory.decodeStream(in);
+            Log.i("Info", "Inside try block of doInBackground(), checkpoint 1");
+            InputStream input = new java.net.URL(imageUrls[0]).openStream();
+            myBitmap = BitmapFactory.decodeStream(input);
 
-            Log.i("Info ImageDownloader", "Inside try block of doInBackground(), checkpoint 2");
+            Log.i("Info", "Inside try block of doInBackground(), checkpoint 2");
             return myBitmap;
         } catch (Exception e) {
-            Log.i("Info ImageDownloader", "Inside catch block");
+            Log.i("Info", "Inside catch block");
             e.printStackTrace();
             return null;
         }
