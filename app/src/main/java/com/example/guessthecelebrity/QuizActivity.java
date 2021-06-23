@@ -31,6 +31,7 @@ public class QuizActivity extends AppCompatActivity {
     private QuizInfo quizInfo;
     private List<CelebInfo> celebsInfo;
     private Intent intent;
+    private Boolean canClick;
 
     private void initialise() {
         timerTextView = findViewById(R.id.timerTextView);
@@ -43,6 +44,7 @@ public class QuizActivity extends AppCompatActivity {
         quizInfo = new QuizInfo();
         celebsInfo = (ArrayList<CelebInfo>) getIntent().getExtras().getSerializable("celebsInfo");
         intent = new Intent(QuizActivity.this, PostQuizActivity.class);
+        canClick = true;
     }
 
     private void setGameText() {
@@ -113,29 +115,33 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     public void clickOption(View view) {
-        // Setting Verdict on TextView
-        String guessVerdictTextViewText = guessVerdictTextView.getText().toString();
-        if (quizInfo.checkAnswer(((TextView) view).getText().toString())) {
-            guessVerdictTextViewText += "<font color=#4CBB17>Correct :)</font>";
-        } else {
-            guessVerdictTextViewText += "<font color=#EE4B2B>Wrong :( </font>";
-            guessVerdictTextViewText += "<font color=#000000>"
-                    + "It is " + quizInfo.getCorrectCelebName() + "</font>";
-        }
-        guessVerdictTextView.setText(Html.fromHtml(guessVerdictTextViewText));
-
-        // Setting the timer to show verdict for a limited time i.e. 0.75 seconds and move on to
-        // the next question
-        new CountDownTimer(750,  750) {
-            @Override
-            public void onTick(long millisUntilFinished) { }
-            @Override
-            public void onFinish() {
-                guessVerdictTextView.setText("Guess Verdict : ");
-                guessVerdictTextView.setTextColor(Color.BLACK);
-                setGameText();
+        if (canClick) {
+            // Setting Verdict on TextView
+            canClick = false;
+            String guessVerdictTextViewText = guessVerdictTextView.getText().toString();
+            if (quizInfo.checkAnswer(((TextView) view).getText().toString())) {
+                guessVerdictTextViewText += "<font color=#4CBB17>Correct :)</font>";
+            } else {
+                guessVerdictTextViewText += "<font color=#EE4B2B>Wrong :( </font>";
+                guessVerdictTextViewText += "<font color=#000000>"
+                        + "It is " + quizInfo.getCorrectCelebName() + "</font>";
             }
-        }.start();
+            guessVerdictTextView.setText(Html.fromHtml(guessVerdictTextViewText));
+
+            // Setting the timer to show verdict for a limited time i.e. 0.75 seconds and move on to
+            // the next question
+            new CountDownTimer(750,  750) {
+                @Override
+                public void onTick(long millisUntilFinished) { }
+                @Override
+                public void onFinish() {
+                    guessVerdictTextView.setText("Guess Verdict : ");
+                    guessVerdictTextView.setTextColor(Color.BLACK);
+                    setGameText();
+                    canClick = true;
+                }
+            }.start();
+        }
     }
 
     @Override
