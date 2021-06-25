@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         while (celebrityWebsiteHtml.isEmpty()) {
             try {
                 task = new DownloadTask();
-                celebrityWebsiteHtml = task.execute("https://www.imdb.com/list/ls052283250/").get();
+                celebrityWebsiteHtml = task.execute("https://www.imdb.com/list/ls020280202/").get();
             } catch (Exception e) {
                 e.printStackTrace();
             }
